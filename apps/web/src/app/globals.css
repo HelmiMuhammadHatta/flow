@@ -1,0 +1,58 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+@theme {
+  --color-brand-50: #f2f9f5;
+  --color-brand-100: #d6f3e2;
+  --color-brand-200: #a9e5c1;
+  --color-brand-300: #74ce97;
+  --color-brand-400: #46b271;
+  --color-brand-500: #2e9b5b;
+  --color-brand-600: #257849;
+  --color-brand-700: #20533a;
+  --color-brand-800: #1b3d2c;
+  --color-brand-850: #1a382a;
+  --color-brand-900: #224836;
+  --color-brand-950: #12251c;
+
+  --color-gold-50: #fdf8ee;
+  --color-gold-100: #faebd0;
+  --color-gold-200: #f2d8a5;
+  --color-gold-300: #e8c072;
+  --color-gold-400: #d8a543;
+  --color-gold-500: #c9922b;
+  --color-gold-600: #a6751c;
+  --color-gold-700: #7e5714;
+}
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
