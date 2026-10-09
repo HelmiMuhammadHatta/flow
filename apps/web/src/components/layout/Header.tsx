@@ -45,19 +45,17 @@ export function Header({ user, onToggleSidebar }: HeaderProps) {
             <Menu className="w-5 h-5" />
           </button>
 
-          <Link href="/beranda" className="flex items-center gap-3 group">
-            <div className="bg-white rounded-lg p-1.5 shadow-2xs">
-              <div className="relative w-24 sm:w-28 h-6 sm:h-7">
-                <Image
-                  src="/brand/logo.png"
-                  alt="Cetrofarm"
-                  fill
-                  priority
-                  className="object-contain"
-                />
-              </div>
+          <Link href="/beranda" className="flex items-center gap-2.5 group">
+            <div className="relative w-28 sm:w-32 h-8 sm:h-9">
+              <Image
+                src="/brand/logo.png"
+                alt="Cetrofarm"
+                fill
+                priority
+                className="object-contain"
+              />
             </div>
-            <div className="hidden sm:block pl-2 border-l border-brand-800">
+            <div className="hidden sm:block pl-2.5 border-l border-brand-800">
               <span className="text-xs font-semibold tracking-wider text-emerald-300 uppercase">
                 Centro
               </span>

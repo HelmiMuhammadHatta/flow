@@ -73,16 +73,14 @@ function LoginContent() {
         <div className="relative z-10 my-auto py-12 max-w-lg">
           {/* Logo Asli Cetrofarm */}
           <div className="mb-8">
-            <div className="inline-block bg-white rounded-2xl p-3 shadow-md border border-brand-800/60">
-              <div className="relative w-72 h-24">
-                <Image
-                  src="/brand/logo.png"
-                  alt="Logo Resmi Cetrofarm"
-                  fill
-                  priority
-                  className="object-contain"
-                />
-              </div>
+            <div className="relative w-64 sm:w-72 h-20 sm:h-24">
+              <Image
+                src="/brand/logo.png"
+                alt="Logo Resmi Cetrofarm"
+                fill
+                priority
+                className="object-contain object-left"
+              />
             </div>
           </div>
 
