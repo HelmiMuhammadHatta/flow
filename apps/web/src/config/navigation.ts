@@ -5,6 +5,15 @@ import type { ActionType, ModuleId, NavModule, NavSubItem } from "@/types/naviga
  * Satu sumber kebenaran izin (Single Source of Truth).
  * Digunakan oleh sidebar, kartu modul, dan penjaga rute (route guard).
  */
+/**
+ * Profil izin eksekutif bersama (Manager & Direksi).
+ * Sesuai PRD 4.1: Manager dan Direksi memiliki hak akses yang identik
+ * (monitoring skala company / read-only Operasional & Keuangan + Dashboard Eksekutif).
+ */
+export function isExecutiveRole(role: Role): boolean {
+  return role === "manager" || role === "director";
+}
+
 export function canAccess(
   userOrRole: MockUser | Role,
   moduleId: ModuleId,
@@ -27,6 +36,8 @@ export function canAccess(
     return true;
   }
 
+  const isExecutive = isExecutiveRole(role);
+
   switch (moduleId) {
     case "hris":
       // Lapisan dasar dapat diakses oleh semua karyawan
@@ -36,8 +47,8 @@ export function canAccess(
 
     case "ops":
       if (role === "finance") return true;
-      if (role === "manager" || role === "director") {
-        // Manager dan Direksi hanya boleh membaca (read-only)
+      if (isExecutive) {
+        // Profil eksekutif: hanya baca (read-only)
         return action === "read";
       }
       return false;
@@ -50,14 +61,14 @@ export function canAccess(
         }
         return true;
       }
-      if (role === "manager" || role === "director") {
-        // Manager dan Direksi hanya boleh membaca (read-only)
+      if (isExecutive) {
+        // Profil eksekutif: hanya baca (read-only)
         return action === "read";
       }
       return false;
 
     case "executive":
-      return role === "manager" || role === "director";
+      return isExecutive;
 
     case "settings":
       return role === "admin";
@@ -149,7 +160,7 @@ export function getNavigationForUser(user: MockUser): NavModule[] {
   // ---------------------------------------------------------------------------
   // 2. LAPISAN ROLE: Modul tambahan sesuai matriks peran
   // ---------------------------------------------------------------------------
-  const isReadOnlyOpsFin = user.role === "manager" || user.role === "director";
+  const isReadOnlyOpsFin = isExecutiveRole(user.role);
 
   // Operasional (CentroOPS)
   if (canAccess(user, "ops", "read")) {

@@ -45,7 +45,7 @@ export function ModuleCard({ module }: ModuleCardProps) {
         {/* Header Kartu: Ikon & Badge Status */}
         <div className="flex items-start justify-between mb-4">
           <div
-            className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+            className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
               isActive
                 ? "bg-brand-50 border border-brand-200/70 text-brand-600 shadow-2xs"
                 : "bg-slate-100 border border-slate-200 text-slate-400"
@@ -54,13 +54,7 @@ export function ModuleCard({ module }: ModuleCardProps) {
             <IconComponent className="w-6 h-6" />
           </div>
 
-          <div className="flex items-center gap-1.5">
-            {isReadOnly && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 border border-sky-200">
-                <Eye className="w-3 h-3 text-sky-600" />
-                <span>Hanya lihat</span>
-              </span>
-            )}
+          <div className="shrink-0">
             {isActive ? (
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-200">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span>
@@ -75,11 +69,21 @@ export function ModuleCard({ module }: ModuleCardProps) {
           </div>
         </div>
 
-        {/* Judul & Deskripsi */}
-        <h3 className="text-lg font-bold text-slate-900 tracking-tight">
-          {module.name}
-        </h3>
-        <p className="mt-1.5 text-xs text-slate-600 leading-relaxed min-h-[36px]">
+        {/* Judul & Chip Hanya Lihat */}
+        <div>
+          <h3 className="text-lg font-bold text-slate-900 tracking-tight">
+            {module.name}
+          </h3>
+          {isReadOnly && (
+            <div className="mt-1.5">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium bg-sky-50 text-sky-700 border border-sky-200">
+                <Eye className="w-3 h-3 text-sky-600" />
+                <span>Hanya lihat</span>
+              </span>
+            </div>
+          )}
+        </div>
+        <p className="mt-2 text-xs text-slate-600 leading-relaxed min-h-[36px]">
           {module.description}
         </p>
 

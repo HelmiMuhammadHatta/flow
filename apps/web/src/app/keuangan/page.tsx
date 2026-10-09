@@ -81,17 +81,24 @@ function KeuanganContent() {
             </div>
 
             {canClosePeriod && (
-              <div className="bg-white border border-brand-200 rounded-xl p-4 shadow-2xs hover:border-brand-500 transition-colors">
+              <Link
+                href="/keuangan/tutup-periode"
+                className="bg-white border border-brand-200 rounded-xl p-4 shadow-2xs hover:border-brand-500 hover:shadow-xs transition-all block group"
+              >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-900 block">Tutup Periode</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200">Khusus Corp</span>
+                  <span className="text-xs font-bold text-slate-900 group-hover:text-brand-700 transition-colors">
+                    Tutup Periode
+                  </span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200">
+                    Khusus Corp
+                  </span>
                 </div>
                 <p className="text-[11px] text-slate-500 mt-1">Closing akuntansi tanggal 25 (2026-10).</p>
                 <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
-                  <span className="font-semibold text-emerald-700">Periode 2026-10</span>
-                  <CheckCircle2 className="w-4 h-4 text-brand-500" />
+                  <span className="font-semibold text-emerald-700">Buka Proses Closing</span>
+                  <CheckCircle2 className="w-4 h-4 text-brand-500 group-hover:translate-x-0.5 transition-transform" />
                 </div>
-              </div>
+              </Link>
             )}
           </div>
 

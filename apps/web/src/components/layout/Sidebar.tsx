@@ -58,7 +58,7 @@ export function Sidebar({ user, isOpen, onClose }: SidebarProps) {
         {/* Mobile Header in Drawer */}
         <div className="flex items-center justify-between h-16 px-5 border-b border-brand-800 lg:hidden shrink-0">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-white tracking-wide">Navigasi Centro</span>
+            <span className="font-bold text-white tracking-wide">Navigasi Cetrofarm</span>
           </div>
           <button
             type="button"
@@ -105,29 +105,35 @@ export function Sidebar({ user, isOpen, onClose }: SidebarProps) {
 
                 return (
                   <div key={module.id} className="space-y-1">
-                    {/* Header Modul (Poin 9: whitespace-nowrap & shrink-0 agar tidak patah baris) */}
-                    <div className="flex items-center justify-between gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-white/95">
-                      <div className="flex items-center gap-2 min-w-0">
+                    {/* Header Modul (Teks membungkus ke 2 baris, badge hanya ikon) */}
+                    <div className="flex items-start justify-between gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-white/95">
+                      <div className="flex items-start gap-2 min-w-0 flex-1">
                         <IconComponent
-                          className={`w-4 h-4 shrink-0 ${
+                          className={`w-4 h-4 shrink-0 mt-0.5 ${
                             isActiveModule ? "text-brand-400" : "text-slate-400"
                           }`}
                         />
-                        <span className="truncate">{module.name}</span>
+                        <span className="break-words whitespace-normal leading-snug">{module.name}</span>
                       </div>
 
-                      {/* Badge Modul */}
-                      <div className="shrink-0 flex items-center gap-1">
+                      {/* Badge Modul (Ikon saja tanpa teks, dengan tooltip & aria-label) */}
+                      <div className="shrink-0 flex items-center gap-1.5 ml-2 mt-0.5">
                         {module.isReadOnly && (
-                          <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-sky-500/20 text-sky-200 border border-sky-400/30 font-medium whitespace-nowrap shrink-0 flex items-center gap-0.5">
-                            <Eye className="w-2.5 h-2.5" />
-                            <span>Lihat</span>
+                          <span
+                            className="p-1 rounded-md bg-sky-500/20 text-sky-300 border border-sky-400/30 flex items-center justify-center shrink-0"
+                            title="Hanya lihat"
+                            aria-label="Hanya lihat"
+                          >
+                            <Eye className="w-3 h-3" />
                           </span>
                         )}
                         {!isActiveModule && (
-                          <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-gold-500/20 text-gold-300 border border-gold-500/30 font-medium whitespace-nowrap shrink-0 flex items-center gap-0.5">
-                            <Lock className="w-2.5 h-2.5" />
-                            <span>Segera hadir</span>
+                          <span
+                            className="p-1 rounded-md bg-gold-500/20 text-gold-300 border border-gold-500/30 flex items-center justify-center shrink-0"
+                            title="Segera hadir"
+                            aria-label="Segera hadir"
+                          >
+                            <Lock className="w-3 h-3" />
                           </span>
                         )}
                       </div>
@@ -145,13 +151,13 @@ export function Sidebar({ user, isOpen, onClose }: SidebarProps) {
                               key={item.id}
                               href={item.href}
                               onClick={onClose}
-                              className={`flex items-center justify-between px-3 py-1.5 rounded-md text-xs transition-colors ${
+                              className={`flex items-start justify-between gap-2 px-3 py-1.5 rounded-md text-xs transition-colors ${
                                 isCurrent
                                   ? "bg-brand-800 text-white font-medium text-emerald-300"
                                   : "text-emerald-100/80 hover:bg-brand-850 hover:text-white"
                               }`}
                             >
-                              <span className="truncate">{item.name}</span>
+                              <span className="break-words whitespace-normal leading-snug">{item.name}</span>
                             </Link>
                           );
                         }
@@ -160,11 +166,11 @@ export function Sidebar({ user, isOpen, onClose }: SidebarProps) {
                         return (
                           <div
                             key={item.id}
-                            className="flex items-center justify-between gap-1 px-3 py-1.5 rounded-md text-xs text-emerald-200/40 cursor-not-allowed select-none"
+                            className="flex items-start justify-between gap-2 px-3 py-1.5 rounded-md text-xs text-emerald-200/40 cursor-not-allowed select-none"
                             title="Fitur ini dijadwalkan pada roadmap fase berikutnya"
                           >
-                            <span className="truncate">{item.name}</span>
-                            <Lock className="w-3 h-3 text-slate-500 shrink-0" />
+                            <span className="break-words whitespace-normal leading-snug">{item.name}</span>
+                            <Lock className="w-3 h-3 text-slate-500 shrink-0 mt-0.5" />
                           </div>
                         );
                       })}

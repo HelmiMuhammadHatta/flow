@@ -211,9 +211,9 @@ export function getRoleBadgeLabel(role: Role, scope?: RoleScope, devPersonaKey?:
     case "super_admin":
       return "Super Admin • Seluruh region";
     case "admin":
-      return "Admin Sistem • Seluruh region";
+      return "Admin Sistem • Sistem";
     case "hr":
-      return "HR & GA • Seluruh region";
+      return "HR & GA • Seluruh karyawan";
     case "manager":
       return "Manajer • Seluruh region";
     case "director":

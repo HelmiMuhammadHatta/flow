@@ -45,8 +45,8 @@ export function Header({ user, onToggleSidebar }: HeaderProps) {
             <Menu className="w-5 h-5" />
           </button>
 
-          <Link href="/beranda" className="flex items-center gap-2.5 group">
-            <div className="relative w-28 sm:w-32 h-8 sm:h-9">
+          <Link href="/beranda" className="flex items-center group" title="Cetrofarm Portal">
+            <div className="relative w-28 sm:w-36 h-8 sm:h-9">
               <Image
                 src="/brand/logo.png"
                 alt="Cetrofarm"
@@ -54,11 +54,6 @@ export function Header({ user, onToggleSidebar }: HeaderProps) {
                 priority
                 className="object-contain"
               />
-            </div>
-            <div className="hidden sm:block pl-2.5 border-l border-brand-800">
-              <span className="text-xs font-semibold tracking-wider text-emerald-300 uppercase">
-                Centro
-              </span>
             </div>
           </Link>
         </div>
@@ -71,11 +66,6 @@ export function Header({ user, onToggleSidebar }: HeaderProps) {
             <span className="font-medium text-emerald-100">
               {getRoleBadgeLabel(user.role, user.scope, user.devPersonaKey)}
             </span>
-            {user.region && (
-              <span className="text-emerald-300/80 text-[11px]">
-                ({user.region})
-              </span>
-            )}
           </div>
 
           {/* User Profile Menu */}
