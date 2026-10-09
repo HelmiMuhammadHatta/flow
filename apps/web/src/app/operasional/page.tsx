@@ -50,19 +50,25 @@ function OperasionalContent() {
           {/* Quick Sub-menu Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { id: "po", title: "Purchase Order (PO)", desc: "Daftar PO pelanggan dan status pemenuhan.", count: "24 PO Aktif" },
-              { id: "btb", title: "Bukti Terima Barang (BTB)", desc: "Penerimaan fisik barang di gudang/distribusi.", count: "18 BTB Tercatat" },
-              { id: "invoice", title: "Invoice Penjualan", desc: "Faktur penjualan yang siap direkonsiliasi.", count: "14 Menunggu Matching" },
-              { id: "pelunasan", title: "Pelunasan & Alokasi", desc: "Penerimaan pembayaran dan alokasi bank.", count: "8 Batch Alokasi" },
+              { id: "po", title: "Purchase Order (PO)", desc: "Daftar PO pelanggan dan status pemenuhan.", count: "24 PO Aktif", href: "/operasional/po" },
+              { id: "btb", title: "Bukti Terima Barang (BTB)", desc: "Penerimaan fisik barang di gudang/distribusi.", count: "18 BTB Tercatat", href: "/operasional/btb" },
+              { id: "invoice", title: "Invoice Penjualan", desc: "Faktur penjualan yang siap direkonsiliasi.", count: "14 Menunggu Matching", href: "/operasional/invoice" },
+              { id: "pelunasan", title: "Pelunasan & Alokasi", desc: "Penerimaan pembayaran dan alokasi bank.", count: "8 Batch Alokasi", href: "/operasional/pelunasan" },
             ].map((item) => (
-              <div key={item.id} className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs hover:border-brand-500/40 transition-colors">
-                <span className="text-xs font-bold text-slate-900 block">{item.title}</span>
+              <Link
+                key={item.id}
+                href={item.href}
+                className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs hover:border-brand-500/60 hover:shadow-xs transition-all block group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-slate-900 group-hover:text-brand-600 transition-colors">{item.title}</span>
+                </div>
                 <p className="text-[11px] text-slate-500 mt-1">{item.desc}</p>
                 <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
                   <span className="font-semibold text-brand-700">{item.count}</span>
                   <CheckCircle2 className="w-4 h-4 text-brand-500" />
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 

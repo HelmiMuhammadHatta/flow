@@ -96,24 +96,27 @@ export function ModuleCard({ module }: ModuleCardProps) {
             {module.items.map((item) => {
               const isItemComingSoon = !isActive || item.status === "coming_soon";
 
+              if (!isItemComingSoon) {
+                return (
+                  <Link
+                    key={item.id}
+                    href={item.href}
+                    className="text-xs px-2.5 py-1 rounded-md font-medium transition-colors flex items-center gap-1 bg-slate-100 text-slate-700 hover:bg-brand-50 hover:text-brand-700 cursor-pointer"
+                    title={item.description}
+                  >
+                    <span>{item.name}</span>
+                  </Link>
+                );
+              }
+
               return (
                 <span
                   key={item.id}
-                  className={`text-xs px-2.5 py-1 rounded-md font-medium transition-colors flex items-center gap-1 ${
-                    !isItemComingSoon
-                      ? "bg-slate-100 text-slate-700 hover:bg-brand-50 hover:text-brand-700 cursor-pointer"
-                      : "bg-slate-100/70 text-slate-400 cursor-not-allowed select-none"
-                  }`}
-                  title={
-                    item.status === "coming_soon"
-                      ? `${item.name} (Segera hadir)`
-                      : item.description
-                  }
+                  className="text-xs px-2.5 py-1 rounded-md font-medium transition-colors flex items-center gap-1 bg-slate-100/70 text-slate-400 cursor-not-allowed select-none"
+                  title={`${item.name} (Segera hadir)`}
                 >
                   <span>{item.name}</span>
-                  {isItemComingSoon && (
-                    <Lock className="w-2.5 h-2.5 text-slate-400 shrink-0" />
-                  )}
+                  <Lock className="w-2.5 h-2.5 text-slate-400 shrink-0" />
                 </span>
               );
             })}

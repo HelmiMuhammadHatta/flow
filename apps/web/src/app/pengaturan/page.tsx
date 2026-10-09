@@ -49,41 +49,50 @@ function PengaturanContent() {
 
           {/* Quick Sub-menu Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs hover:border-brand-500/40 transition-colors">
+            <Link
+              href="/pengaturan/users"
+              className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs hover:border-brand-500/60 hover:shadow-xs transition-all block group"
+            >
               <div className="flex items-center gap-2 mb-2">
                 <ShieldCheck className="w-4 h-4 text-brand-500" />
-                <span className="text-xs font-bold text-slate-900">User dan Role</span>
+                <span className="text-xs font-bold text-slate-900 group-hover:text-brand-600 transition-colors">User dan Role</span>
               </div>
               <p className="text-[11px] text-slate-500">Pengelolaan kredensial akun, scope wewenang, dan audit login.</p>
               <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
                 <span className="font-semibold text-brand-700">8 Pengguna Terdaftar</span>
                 <CheckCircle2 className="w-4 h-4 text-brand-500" />
               </div>
-            </div>
+            </Link>
 
-            <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs hover:border-brand-500/40 transition-colors">
+            <Link
+              href="/pengaturan/master-data"
+              className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs hover:border-brand-500/60 hover:shadow-xs transition-all block group"
+            >
               <div className="flex items-center gap-2 mb-2">
                 <Database className="w-4 h-4 text-brand-500" />
-                <span className="text-xs font-bold text-slate-900">Master Data</span>
+                <span className="text-xs font-bold text-slate-900 group-hover:text-brand-600 transition-colors">Master Data</span>
               </div>
               <p className="text-[11px] text-slate-500">Master customer, pemetaan region, dan divisi organisasi.</p>
               <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
                 <span className="font-semibold text-brand-700">Region I & II Siap</span>
                 <CheckCircle2 className="w-4 h-4 text-brand-500" />
               </div>
-            </div>
+            </Link>
 
-            <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs hover:border-brand-500/40 transition-colors">
+            <Link
+              href="/pengaturan/sistem"
+              className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs hover:border-brand-500/60 hover:shadow-xs transition-all block group"
+            >
               <div className="flex items-center gap-2 mb-2">
                 <Sliders className="w-4 h-4 text-brand-500" />
-                <span className="text-xs font-bold text-slate-900">Setting Sistem</span>
+                <span className="text-xs font-bold text-slate-900 group-hover:text-brand-600 transition-colors">Setting Sistem</span>
               </div>
               <p className="text-[11px] text-slate-500">Toleransi matching (Rp 1.000) dan grace days overdue.</p>
               <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
                 <span className="font-semibold text-brand-700">Default Aktif</span>
                 <CheckCircle2 className="w-4 h-4 text-brand-500" />
               </div>
-            </div>
+            </Link>
           </div>
 
           <div className="p-4 bg-white border border-slate-200 rounded-xl text-center text-xs text-slate-500">

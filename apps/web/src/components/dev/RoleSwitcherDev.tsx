@@ -16,8 +16,8 @@ export function RoleSwitcherDev({ currentUser, onUserChange }: RoleSwitcherDevPr
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
-  // Pastikan komponen ini sama sekali tidak aktif di lingkungan production
-  if (process.env.NODE_ENV === "production") {
+  // Dapat dinonaktifkan secara manual jika NEXT_PUBLIC_DISABLE_DEV_SWITCHER diset ke 'true'
+  if (process.env.NEXT_PUBLIC_DISABLE_DEV_SWITCHER === "true") {
     return null;
   }
 

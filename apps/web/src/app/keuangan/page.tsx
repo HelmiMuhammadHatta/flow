@@ -50,18 +50,24 @@ function KeuanganContent() {
 
           {/* Quick Sub-menu Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs hover:border-brand-500/40 transition-colors">
-              <span className="text-xs font-bold text-slate-900 block">Piutang Pelanggan</span>
+            <Link
+              href="/keuangan/piutang"
+              className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs hover:border-brand-500/60 hover:shadow-xs transition-all block group"
+            >
+              <span className="text-xs font-bold text-slate-900 group-hover:text-brand-600 transition-colors block">Piutang Pelanggan</span>
               <p className="text-[11px] text-slate-500 mt-1">Outstanding piutang berjalan per pelanggan.</p>
               <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
                 <span className="font-semibold text-brand-700">Rp 482.500.000</span>
                 <CheckCircle2 className="w-4 h-4 text-brand-500" />
               </div>
-            </div>
+            </Link>
 
-            <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs opacity-80">
+            <Link
+              href="/keuangan/hutang"
+              className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs opacity-90 hover:border-brand-500/40 transition-colors block group"
+            >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-900 block">Hutang Vendor</span>
+                <span className="text-xs font-bold text-slate-900 group-hover:text-brand-600 transition-colors block">Hutang Vendor</span>
                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-gold-50 text-gold-600 font-medium border border-gold-200">Segera hadir</span>
               </div>
               <p className="text-[11px] text-slate-500 mt-1">Kewajiban vendor bills (Fase 3 Procurement).</p>
@@ -69,16 +75,19 @@ function KeuanganContent() {
                 <span>Roadmap Fase 3</span>
                 <Lock className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </Link>
 
-            <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs hover:border-brand-500/40 transition-colors">
-              <span className="text-xs font-bold text-slate-900 block">Kas dan Bank</span>
+            <Link
+              href="/keuangan/kas-bank"
+              className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs hover:border-brand-500/60 hover:shadow-xs transition-all block group"
+            >
+              <span className="text-xs font-bold text-slate-900 group-hover:text-brand-600 transition-colors block">Kas dan Bank</span>
               <p className="text-[11px] text-slate-500 mt-1">Mutasi rekening operasional dan bukti transfer.</p>
               <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
                 <span className="font-semibold text-brand-700">3 Rekening Aktif</span>
                 <CheckCircle2 className="w-4 h-4 text-brand-500" />
               </div>
-            </div>
+            </Link>
 
             {canClosePeriod && (
               <Link
