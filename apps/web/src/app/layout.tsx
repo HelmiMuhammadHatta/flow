@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Centro Platform - Cetrofarm",
   description: "Satu pintu untuk operasional, keuangan, dan HR Cetrofarm.",
   icons: {
-    icon: "/brand/logo.jpg",
+    icon: "/brand/logo.png",
   },
 };
 

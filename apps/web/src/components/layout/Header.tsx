@@ -49,7 +49,7 @@ export function Header({ user, onToggleSidebar }: HeaderProps) {
             <div className="bg-white rounded-lg p-1.5 shadow-2xs">
               <div className="relative w-24 sm:w-28 h-6 sm:h-7">
                 <Image
-                  src="/brand/logo.jpg"
+                  src="/brand/logo.png"
                   alt="Cetrofarm"
                   fill
                   priority

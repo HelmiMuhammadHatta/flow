@@ -76,7 +76,7 @@ function LoginContent() {
             <div className="inline-block bg-white rounded-2xl p-3 shadow-md border border-brand-800/60">
               <div className="relative w-72 h-24">
                 <Image
-                  src="/brand/logo.jpg"
+                  src="/brand/logo.png"
                   alt="Logo Resmi Cetrofarm"
                   fill
                   priority
@@ -128,7 +128,7 @@ function LoginContent() {
         <div className="lg:hidden w-full max-w-md mb-6 flex flex-col items-center text-center">
           <div className="relative w-64 h-24 mb-2">
             <Image
-              src="/brand/logo.jpg"
+              src="/brand/logo.png"
               alt="Logo Resmi Cetrofarm"
               fill
               priority
