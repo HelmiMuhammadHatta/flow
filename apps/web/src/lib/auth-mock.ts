@@ -86,24 +86,86 @@ export const MOCK_USERS: MockUser[] = [
 
 const AUTH_STORAGE_KEY = "centro_mock_active_user";
 
-export function getInitialUser(): MockUser {
+export function getStoredUser(): MockUser | null {
   if (typeof window === "undefined") {
-    return MOCK_USERS[0];
+    return null;
   }
   try {
     const stored = localStorage.getItem(AUTH_STORAGE_KEY);
     if (stored) {
       const parsed = JSON.parse(stored);
-      const found = MOCK_USERS.find((u) => u.id === parsed.id || u.devPersonaKey === parsed.devPersonaKey);
+      const found = MOCK_USERS.find(
+        (u) => u.id === parsed.id || u.devPersonaKey === parsed.devPersonaKey
+      );
       if (found) return found;
     }
   } catch {
     // fallback
   }
-  return MOCK_USERS[0]; // default: Super Admin
+  return null;
+}
+
+// In-memory singleton store untuk pengguna aktif
+let inMemoryActiveUser: MockUser = MOCK_USERS[0];
+let isStoreInitializedFromLocal = false;
+const authSubscribers = new Set<() => void>();
+
+function notifyAuthSubscribers(): void {
+  authSubscribers.forEach((cb) => {
+    try {
+      cb();
+    } catch {
+      // ignore
+    }
+  });
+}
+
+export function subscribeAuth(callback: () => void): () => void {
+  authSubscribers.add(callback);
+
+  const handleStorage = (e: StorageEvent) => {
+    if (e.key === AUTH_STORAGE_KEY) {
+      const stored = getStoredUser();
+      inMemoryActiveUser = stored ?? MOCK_USERS[0];
+      callback();
+    }
+  };
+
+  if (typeof window !== "undefined") {
+    window.addEventListener("storage", handleStorage);
+  }
+
+  return () => {
+    authSubscribers.delete(callback);
+    if (typeof window !== "undefined") {
+      window.removeEventListener("storage", handleStorage);
+    }
+  };
+}
+
+export function getActiveUserSnapshot(): MockUser {
+  if (typeof window !== "undefined" && !isStoreInitializedFromLocal) {
+    isStoreInitializedFromLocal = true;
+    const stored = getStoredUser();
+    if (stored) {
+      inMemoryActiveUser = stored;
+    }
+  }
+  return inMemoryActiveUser;
+}
+
+export function getServerActiveUserSnapshot(): MockUser {
+  return MOCK_USERS[0];
+}
+
+export function getInitialUser(): MockUser {
+  // Selalu deterministik (Super Admin) agar render server (SSR) dan client initial hydration selalu identik
+  return MOCK_USERS[0];
 }
 
 export function saveActiveUser(user: MockUser): void {
+  inMemoryActiveUser = user;
+  isStoreInitializedFromLocal = true;
   if (typeof window !== "undefined") {
     try {
       localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
@@ -111,9 +173,12 @@ export function saveActiveUser(user: MockUser): void {
       // fallback
     }
   }
+  notifyAuthSubscribers();
 }
 
 export function clearActiveUser(): void {
+  inMemoryActiveUser = MOCK_USERS[0];
+  isStoreInitializedFromLocal = true;
   if (typeof window !== "undefined") {
     try {
       localStorage.removeItem(AUTH_STORAGE_KEY);
@@ -121,6 +186,7 @@ export function clearActiveUser(): void {
       // fallback
     }
   }
+  notifyAuthSubscribers();
 }
 
 /**

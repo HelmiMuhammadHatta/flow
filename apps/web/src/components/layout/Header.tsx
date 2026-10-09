@@ -71,7 +71,7 @@ export function Header({ user, onToggleSidebar }: HeaderProps) {
           <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-800/80 border border-brand-700/80 text-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-gold-400"></span>
             <span className="font-medium text-emerald-100">
-              {getRoleBadgeLabel(user.role, user.scope)}
+              {getRoleBadgeLabel(user.role, user.scope, user.devPersonaKey)}
             </span>
             {user.region && (
               <span className="text-emerald-300/80 text-[11px]">
@@ -110,7 +110,7 @@ export function Header({ user, onToggleSidebar }: HeaderProps) {
                   <p className="text-xs font-semibold text-slate-900">{user.name}</p>
                   <p className="text-[11px] text-slate-500 truncate">{user.email}</p>
                   <div className="mt-1.5 inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-brand-50 text-brand-700 border border-brand-200">
-                    {getRoleBadgeLabel(user.role, user.scope)}
+                    {getRoleBadgeLabel(user.role, user.scope, user.devPersonaKey)}
                   </div>
                 </div>
 

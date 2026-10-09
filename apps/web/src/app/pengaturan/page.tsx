@@ -1,41 +1,20 @@
 "use client";
 
-import React, { Suspense, useState, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
+import React, { Suspense } from "react";
 import { AppShell } from "@/components/layout/AppShell";
 import { UnauthorizedView } from "@/components/auth/UnauthorizedView";
 import { canAccess } from "@/config/navigation";
-import { MOCK_USERS, getInitialUser, saveActiveUser } from "@/lib/auth-mock";
-import type { MockUser } from "@/types/auth";
+import { useActiveUser } from "@/hooks/useActiveUser";
 import { Settings, CheckCircle2, ShieldCheck, Database, Sliders } from "lucide-react";
 import Link from "next/link";
 
 function PengaturanContent() {
-  const searchParams = useSearchParams();
-  const queryRole = searchParams.get("role");
-
-  const roleFromQuery = useMemo(() => {
-    if (!queryRole) return null;
-    const lower = queryRole.toLowerCase();
-    return (
-      MOCK_USERS.find(
-        (u) =>
-          u.devPersonaKey === lower ||
-          u.role === lower ||
-          (lower === "direksi" && u.role === "director") ||
-          (lower === "karyawan" && u.role === "employee") ||
-          (lower === "manajer" && u.role === "manager")
-      ) ?? null
-    );
-  }, [queryRole]);
-
-  const [currentUser, setCurrentUser] = useState<MockUser>(() => roleFromQuery ?? getInitialUser());
-  const activeUser = roleFromQuery ?? currentUser;
+  const { activeUser, handleUserChange } = useActiveUser();
 
   const hasAccess = canAccess(activeUser, "settings", "manage_settings");
 
   return (
-    <AppShell user={activeUser} onUserChange={(u) => { saveActiveUser(u); setCurrentUser(u); }}>
+    <AppShell user={activeUser} onUserChange={handleUserChange}>
       {!hasAccess ? (
         <UnauthorizedView user={activeUser} moduleName="Pengaturan" />
       ) : (

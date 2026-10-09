@@ -1,43 +1,16 @@
 "use client";
 
-import React, { Suspense, useState, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
+import React, { Suspense } from "react";
 import { AppShell } from "@/components/layout/AppShell";
 import { SummaryStrip } from "@/components/beranda/SummaryStrip";
 import { ModuleCard } from "@/components/beranda/ModuleCard";
 import { getNavigationForUser } from "@/config/navigation";
-import { MOCK_USERS, getInitialUser, getRoleBadgeLabel, saveActiveUser } from "@/lib/auth-mock";
-import type { MockUser } from "@/types/auth";
+import { getRoleBadgeLabel } from "@/lib/auth-mock";
+import { useActiveUser } from "@/hooks/useActiveUser";
 import { ShieldCheck } from "lucide-react";
 
 function BerandaContent() {
-  const searchParams = useSearchParams();
-  const queryRole = searchParams.get("role");
-
-  // Cari persona dev dari query string jika ada (?role=finance_corp, ?role=manager, dll)
-  const roleFromQuery = useMemo(() => {
-    if (!queryRole) return null;
-    const lower = queryRole.toLowerCase();
-    const found = MOCK_USERS.find(
-      (u) =>
-        u.devPersonaKey === lower ||
-        u.role === lower ||
-        (lower === "direksi" && u.role === "director") ||
-        (lower === "karyawan" && u.role === "employee") ||
-        (lower === "manajer" && u.role === "manager")
-    );
-    return found ?? null;
-  }, [queryRole]);
-
-  const [currentUser, setCurrentUser] = useState<MockUser>(() => roleFromQuery ?? getInitialUser());
-
-  const activeUser = roleFromQuery ?? currentUser;
-
-  const handleUserChange = (newUser: MockUser) => {
-    saveActiveUser(newUser);
-    setCurrentUser(newUser);
-  };
-
+  const { activeUser, handleUserChange } = useActiveUser();
   const allowedModules = getNavigationForUser(activeUser);
 
   return (
