@@ -9,6 +9,7 @@ export const MOCK_USERS: MockUser[] = [
     scope: "company",
     division: "Executive Office",
     requires2FA: true,
+    devPersonaKey: "super_admin",
   },
   {
     id: "EMP-002",
@@ -18,6 +19,7 @@ export const MOCK_USERS: MockUser[] = [
     scope: "company",
     division: "Support / Data Center",
     requires2FA: true,
+    devPersonaKey: "admin",
   },
   {
     id: "EMP-003",
@@ -27,6 +29,7 @@ export const MOCK_USERS: MockUser[] = [
     scope: "company",
     division: "Finance Corp",
     requires2FA: true,
+    devPersonaKey: "finance_corp",
   },
   {
     id: "EMP-004",
@@ -37,33 +40,47 @@ export const MOCK_USERS: MockUser[] = [
     division: "Operation I (Sayuran)",
     region: "Region I (Jawa Tengah)",
     requires2FA: true,
+    devPersonaKey: "finance_fa",
   },
   {
     id: "EMP-005",
-    name: "Ir. Hendra Kusuma",
-    email: "director@cetrofarm.com",
-    role: "director",
-    scope: "company",
-    division: "Direksi",
-    requires2FA: false,
-  },
-  {
-    id: "EMP-006",
     name: "Maya Indah",
     email: "hr@cetrofarm.com",
     role: "hr",
     scope: "company",
     division: "Support / HR & GA",
     requires2FA: false,
+    devPersonaKey: "hr",
+  },
+  {
+    id: "EMP-006",
+    name: "Bagus Prakoso",
+    email: "manager.ops@cetrofarm.com",
+    role: "manager",
+    scope: "company",
+    division: "Operation I (Sayuran)",
+    requires2FA: false,
+    devPersonaKey: "manager",
   },
   {
     id: "EMP-007",
+    name: "Ir. Hendra Kusuma",
+    email: "director@cetrofarm.com",
+    role: "director",
+    scope: "company",
+    division: "Direksi",
+    requires2FA: false,
+    devPersonaKey: "director",
+  },
+  {
+    id: "EMP-008",
     name: "Bambang Wijaya",
     email: "bambang.w@cetrofarm.com",
     role: "employee",
     scope: "own",
     division: "Operation I (Sayuran)",
     requires2FA: false,
+    devPersonaKey: "employee",
   },
 ];
 
@@ -77,7 +94,7 @@ export function getInitialUser(): MockUser {
     const stored = localStorage.getItem(AUTH_STORAGE_KEY);
     if (stored) {
       const parsed = JSON.parse(stored);
-      const found = MOCK_USERS.find((u) => u.id === parsed.id);
+      const found = MOCK_USERS.find((u) => u.id === parsed.id || u.devPersonaKey === parsed.devPersonaKey);
       if (found) return found;
     }
   } catch {
@@ -106,22 +123,39 @@ export function clearActiveUser(): void {
   }
 }
 
-export function getRoleBadgeLabel(role: Role, scope?: RoleScope): string {
+/**
+ * Mengembalikan label chip format standar sesuai poin 8:
+ * - Finance Corp • Seluruh region
+ * - Finance FA • Region I (Jawa Tengah)
+ * - HR & GA • Seluruh region
+ * - Manajer • Seluruh region
+ * - Direksi • Seluruh region
+ * - Admin Sistem • Seluruh region
+ * - Super Admin • Seluruh region
+ * - Karyawan • Data pribadi
+ */
+export function getRoleBadgeLabel(role: Role, scope?: RoleScope, devPersonaKey?: string): string {
+  if (devPersonaKey === "finance_corp" || (role === "finance" && scope === "company")) {
+    return "Finance Corp • Seluruh region";
+  }
+  if (devPersonaKey === "finance_fa" || (role === "finance" && scope === "region")) {
+    return "Finance FA • Region I (Jawa Tengah)";
+  }
   switch (role) {
     case "super_admin":
-      return "Super Admin";
+      return "Super Admin • Seluruh region";
     case "admin":
-      return "Admin Sistem";
-    case "finance":
-      return scope === "company" ? "Finance Corp" : "Finance FA (Region)";
-    case "director":
-      return "Direksi";
-    case "manager":
-      return "Manajer";
+      return "Admin Sistem • Seluruh region";
     case "hr":
-      return "HR & GA";
+      return "HR & GA • Seluruh region";
+    case "manager":
+      return "Manajer • Seluruh region";
+    case "director":
+      return "Direksi • Seluruh region";
+    case "supervisor":
+      return "Supervisor • Data pribadi";
     case "employee":
-      return "Karyawan";
+      return "Karyawan • Data pribadi";
     default:
       return role;
   }

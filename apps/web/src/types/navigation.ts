@@ -1,16 +1,15 @@
-import type { Role, RoleScope } from "./auth";
-
 export type ModuleId = "hris" | "ops" | "finance" | "executive" | "settings";
 export type ModuleStatus = "active" | "coming_soon";
+export type ActionType = "read" | "write" | "close_period" | "manage_settings";
 
 export interface NavSubItem {
   id: string;
   name: string;
   href: string;
   description?: string;
-  badge?: string;
-  requiredScope?: RoleScope; // misal 'company' untuk Tutup periode
-  onlyOwn?: boolean; // untuk employee
+  status?: ModuleStatus;
+  requiredAction?: ActionType;
+  onlyOwn?: boolean;
 }
 
 export interface NavModule {
@@ -22,5 +21,5 @@ export interface NavModule {
   iconName: string;
   href: string;
   items: NavSubItem[];
-  allowedRoles: Role[];
+  isReadOnly?: boolean;
 }

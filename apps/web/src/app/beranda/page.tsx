@@ -14,17 +14,19 @@ function BerandaContent() {
   const searchParams = useSearchParams();
   const queryRole = searchParams.get("role");
 
-  // Cari user mock dari query string jika ada (?role=finance_fa, etc.)
+  // Cari persona dev dari query string jika ada (?role=finance_corp, ?role=manager, dll)
   const roleFromQuery = useMemo(() => {
     if (!queryRole) return null;
-    if (queryRole === "admin") return MOCK_USERS[1];
-    if (queryRole === "finance_corp") return MOCK_USERS[2];
-    if (queryRole === "finance_fa" || queryRole === "fa") return MOCK_USERS[3];
-    if (queryRole === "director" || queryRole === "manager") return MOCK_USERS[4];
-    if (queryRole === "hr") return MOCK_USERS[5];
-    if (queryRole === "employee") return MOCK_USERS[6];
-    if (queryRole === "super_admin") return MOCK_USERS[0];
-    return null;
+    const lower = queryRole.toLowerCase();
+    const found = MOCK_USERS.find(
+      (u) =>
+        u.devPersonaKey === lower ||
+        u.role === lower ||
+        (lower === "direksi" && u.role === "director") ||
+        (lower === "karyawan" && u.role === "employee") ||
+        (lower === "manajer" && u.role === "manager")
+    );
+    return found ?? null;
   }, [queryRole]);
 
   const [currentUser, setCurrentUser] = useState<MockUser>(() => roleFromQuery ?? getInitialUser());
@@ -45,12 +47,9 @@ function BerandaContent() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-200">
-                {getRoleBadgeLabel(activeUser.role, activeUser.scope)}
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-200">
+                {getRoleBadgeLabel(activeUser.role, activeUser.scope, activeUser.devPersonaKey)}
               </span>
-              {activeUser.region && (
-                <span className="text-xs text-slate-500">• {activeUser.region}</span>
-              )}
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
               Selamat datang kembali, {activeUser.name}
@@ -68,8 +67,8 @@ function BerandaContent() {
           </div>
         </div>
 
-        {/* Strip Ringkasan Operasional Dummy (Bukan Dashboard Penuh) */}
-        <SummaryStrip />
+        {/* Strip Ringkasan Operasional Dinamis Sesuai Role & Scope (Poin 4) */}
+        <SummaryStrip user={activeUser} />
 
         {/* Grid Modul Berdasarkan Hak Akses Role */}
         <div>
@@ -79,11 +78,11 @@ function BerandaContent() {
                 Daftar Modul Anda
               </h2>
               <p className="text-xs text-slate-500">
-                Menampilkan modul yang diizinkan untuk peran {getRoleBadgeLabel(activeUser.role, activeUser.scope)}.
+                Menampilkan modul yang diizinkan untuk {getRoleBadgeLabel(activeUser.role, activeUser.scope, activeUser.devPersonaKey)}.
               </p>
             </div>
-            <span className="text-xs font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">
-              {allowedModules.length} modul tersedia
+            <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full border border-slate-200/60">
+              {allowedModules.length} modul berlisensi
             </span>
           </div>
 

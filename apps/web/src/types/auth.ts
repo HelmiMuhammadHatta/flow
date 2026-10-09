@@ -5,6 +5,7 @@ export type Role =
   | "manager"
   | "director"
   | "hr"
+  | "supervisor"
   | "employee";
 
 export type RoleScope = "own" | "department" | "region" | "division" | "company";
@@ -19,6 +20,7 @@ export interface MockUser {
   region?: string;
   avatarUrl?: string;
   requires2FA: boolean;
+  devPersonaKey?: string;
 }
 
 export type LoginState = "default" | "loading" | "invalid" | "locked" | "2fa";

@@ -11,6 +11,7 @@ import {
   ArrowRight,
   Lock,
   Layers,
+  Eye,
 } from "lucide-react";
 import type { NavModule } from "@/types/navigation";
 
@@ -29,6 +30,7 @@ const ICON_MAP: Record<string, React.ElementType> = {
 export function ModuleCard({ module }: ModuleCardProps) {
   const IconComponent = ICON_MAP[module.iconName] || Layers;
   const isActive = module.status === "active";
+  const isReadOnly = Boolean(module.isReadOnly);
   const itemCount = module.items.length;
 
   return (
@@ -52,7 +54,13 @@ export function ModuleCard({ module }: ModuleCardProps) {
             <IconComponent className="w-6 h-6" />
           </div>
 
-          <div>
+          <div className="flex items-center gap-1.5">
+            {isReadOnly && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 border border-sky-200">
+                <Eye className="w-3 h-3 text-sky-600" />
+                <span>Hanya lihat</span>
+              </span>
+            )}
             {isActive ? (
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-200">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span>
@@ -81,19 +89,30 @@ export function ModuleCard({ module }: ModuleCardProps) {
             Menu ({itemCount} fitur)
           </div>
           <div className="flex flex-wrap gap-1.5">
-            {module.items.map((item) => (
-              <span
-                key={item.id}
-                className={`text-xs px-2.5 py-1 rounded-md font-medium transition-colors ${
-                  isActive
-                    ? "bg-slate-100 text-slate-700 hover:bg-brand-50 hover:text-brand-700 cursor-pointer"
-                    : "bg-slate-100/70 text-slate-400 cursor-not-allowed select-none"
-                }`}
-                title={item.description}
-              >
-                {item.name}
-              </span>
-            ))}
+            {module.items.map((item) => {
+              const isItemComingSoon = !isActive || item.status === "coming_soon";
+
+              return (
+                <span
+                  key={item.id}
+                  className={`text-xs px-2.5 py-1 rounded-md font-medium transition-colors flex items-center gap-1 ${
+                    !isItemComingSoon
+                      ? "bg-slate-100 text-slate-700 hover:bg-brand-50 hover:text-brand-700 cursor-pointer"
+                      : "bg-slate-100/70 text-slate-400 cursor-not-allowed select-none"
+                  }`}
+                  title={
+                    item.status === "coming_soon"
+                      ? `${item.name} (Segera hadir)`
+                      : item.description
+                  }
+                >
+                  <span>{item.name}</span>
+                  {isItemComingSoon && (
+                    <Lock className="w-2.5 h-2.5 text-slate-400 shrink-0" />
+                  )}
+                </span>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -103,9 +122,13 @@ export function ModuleCard({ module }: ModuleCardProps) {
         {isActive ? (
           <Link
             href={module.href}
-            className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-lg bg-brand-500 hover:bg-brand-600 text-white font-medium text-xs transition-colors shadow-2xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-1"
+            className={`w-full flex items-center justify-center gap-2 py-2 px-4 rounded-lg font-medium text-xs transition-colors shadow-2xs focus:outline-none focus:ring-2 focus:ring-offset-1 ${
+              isReadOnly
+                ? "bg-slate-800 hover:bg-slate-900 text-white focus:ring-slate-500"
+                : "bg-brand-500 hover:bg-brand-600 text-white focus:ring-brand-500"
+            }`}
           >
-            <span>Buka modul {module.name}</span>
+            <span>{isReadOnly ? `Lihat data ${module.name}` : `Buka modul ${module.name}`}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         ) : (
